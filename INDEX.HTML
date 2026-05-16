@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Eye Media</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+}
+
+header{
+background:#111827;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:1000;
+box-shadow:0 2px 10px rgba(0,0,0,0.5);
+}
+
+header h1{
+color:#38bdf8;
+font-size:32px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin:0 10px;
+font-weight:bold;
+transition:0.3s;
+}
+
+nav a:hover{
+color:#38bdf8;
+}
+
+.container{
+display:grid;
+grid-template-columns:250px 1fr 300px;
+gap:20px;
+padding:20px;
+}
+
+.sidebar,
+.main,
+.rightbar{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+}
+
+.profile{
+text-align:center;
+}
+
+.profile img{
+width:100px;
+height:100px;
+border-radius:50%;
+border:3px solid #38bdf8;
+margin-bottom:10px;
+}
+
+.profile h2{
+margin-bottom:5px;
+}
+
+.post-box textarea{
+width:100%;
+height:120px;
+padding:15px;
+border:none;
+border-radius:10px;
+resize:none;
+margin-top:10px;
+font-size:16px;
+}
+
+.post-box input{
+margin-top:10px;
+}
+
+button{
+background:#38bdf8;
+border:none;
+padding:10px 20px;
+border-radius:10px;
+margin-top:10px;
+cursor:pointer;
+font-weight:bold;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+.post{
+background:#0f172a;
+padding:15px;
+border-radius:10px;
+margin-top:20px;
+animation:fade 0.5s;
+}
+
+.post img{
+width:100%;
+margin-top:10px;
+border-radius:10px;
+}
+
+.post-actions{
+display:flex;
+justify-content:space-around;
+margin-top:15px;
+}
+
+.news{
+background:#0f172a;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
+}
+
+.chat-box{
+margin-top:20px;
+}
+
+.chat-messages{
+height:200px;
+overflow-y:auto;
+background:#0f172a;
+padding:10px;
+border-radius:10px;
+margin-top:10px;
+}
+
+.chat-input{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+.chat-input input{
+flex:1;
+padding:10px;
+border:none;
+border-radius:10px;
+}
+
+.admin-panel{
+background:#0f172a;
+padding:15px;
+border-radius:10px;
+margin-top:20px;
+}
+
+footer{
+background:#111827;
+padding:20px;
+text-align:center;
+margin-top:20px;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@media(max-width:1000px){
+
+.container{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>3D Eye Media</h1>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Trending</a>
+<a href="#">Journalists</a>
+<a href="#">Videos</a>
+<a href="#">Live Chat</a>
+<a href="#">Admin</a>
+</nav>
+
+</header>
+
+<div class="container">
+
+<!-- LEFT SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="profile">
+
+<img src="https://i.pravatar.cc/150?img=12">
+
+<h2>Oscar</h2>
+
+<p>Founder & Journalist ✔️</p>
+
+</div>
+
+<hr style="margin:20px 0;">
+
+<h3>News Categories</h3>
+
+<ul style="line-height:2; margin-top:10px;">
+<li>Politics</li>
+<li>Sports</li>
+<li>Technology</li>
+<li>Entertainment</li>
+<li>International</li>
+<li>Breaking News</li>
+</ul>
+
+</div>
+
+<!-- MAIN SECTION -->
+
+<div class="main">
+
+<h2>Create News Post</h2>
+
+<div class="post-box">
+
+<textarea placeholder="Write your news or thoughts here..."></textarea>
+
+<br>
+
+<input type="file" id="imageInput">
+
+<br>
+
+<button onclick="createPost()">Publish News</button>
+
+</div>
+
+<!-- POSTS -->
+
+<div id="posts">
+
+<div class="post">
+
+<h3>3D Eye Media</h3>
+
+<p>Welcome to Nepal's modern digital journalist community platform.</p>
+
+<img src="https://images.unsplash.com/photo-1495020689067-958852a7765e">
+
+<div class="post-actions">
+
+<button onclick="likePost(this)">👍 Like</button>
+
+<button>💬 Comment</button>
+
+<button>🔁 Share</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- LIVE CHAT -->
+
+<div class="chat-box">
+
+<h2>Live Community Chat</h2>
+
+<div class="chat-messages" id="chatMessages">
+
+<p><b>Admin:</b> Welcome to 3D Eye Media.</p>
+
+</div>
+
+<div class="chat-input">
+
+<input type="text" id="chatInput" placeholder="Type your message...">
+
+<button onclick="sendMessage()">Send</button>
+
+</div>
+
+</div>
+
+<!-- ADMIN PANEL -->
+
+<div class="admin-panel">
+
+<h2>Admin Dashboard</h2>
+
+<p>Total Users: 2,540</p>
+<p>Total Posts: 945</p>
+<p>Online Users: 320</p>
+
+<button>Delete Posts</button>
+<button>Ban User</button>
+<button>Edit News</button>
+<button>Send Alert</button>
+
+</div>
+
+</div>
+
+<!-- RIGHT SIDEBAR -->
+
+<div class="rightbar">
+
+<h2>Trending News</h2>
+
+<div class="news">
+<h4>AI Journalism Growth</h4>
+<p>AI tools are helping modern reporters worldwide.</p>
+</div>
+
+<div class="news">
+<h4>Digital Media Expansion</h4>
+<p>Online journalism platforms are rapidly increasing.</p>
+</div>
+
+<div class="news">
+<h4>Sports Finals</h4>
+<p>Major football finals happening this weekend.</p>
+</div>
+
+<h2 style="margin-top:20px;">Top Journalists</h2>
+
+<ul style="line-height:2; margin-top:10px;">
+<li>Oscar ✔️</li>
+<li>John Carter ✔️</li>
+<li>Emma Watson ✔️</li>
+<li>David Miller ✔️</li>
+</ul>
+
+</div>
+
+</div>
+
+<footer>
+
+<p>© 2026 3D Eye Media | All Rights Reserved</p>
+
+</footer>
+
+<script>
+
+function createPost(){
+
+let textarea = document.querySelector("textarea");
+let fileInput = document.getElementById("imageInput");
+let posts = document.getElementById("posts");
+
+if(textarea.value.trim() === ""){
+alert("Please write something!");
+return;
+}
+
+let postText = textarea.value;
+
+let newPost = document.createElement("div");
+
+newPost.classList.add("post");
+
+let imageHTML = "";
+
+if(fileInput.files[0]){
+
+let imageURL = URL.createObjectURL(fileInput.files[0]);
+
+imageHTML = <img src="${imageURL}">;
+
+}
+
+newPost.innerHTML = `
+
+<h3>Oscar</h3>
+
+<p>${postText}</p>
+
+${imageHTML}
+
+<div class="post-actions">
+
+<button onclick="likePost(this)">👍 Like</button>
+
+<button>💬 Comment</button>
+
+<button>🔁 Share</button>
+
+</div>
+
+`;
+
+posts.prepend(newPost);
+
+textarea.value = "";
+fileInput.value = "";
+
+}
+
+function sendMessage(){
+
+let input = document.getElementById("chatInput");
+
+let messages = document.getElementById("chatMessages");
+
+if(input.value.trim() !== ""){
+
+let msg = document.createElement("p");
+
+msg.innerHTML = "<b>Oscar:</b> " + input.value;
+
+messages.appendChild(msg);
+
+messages.scrollTop = messages.scrollHeight;
+
+input.value = "";
+
+}
+
+}
+
+function likePost(button){
+
+let current = button.innerHTML;
+
+if(current.includes("Like")){
+
+button.innerHTML = "❤️ Liked";
+
+}else{
+
+button.innerHTML = "👍 Like";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
